@@ -21,29 +21,26 @@ namespace Service
         }
 
  
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            return repository.GetUserById(id);
+            return await repository.GetUserById(id);
 
         }
 
-        public User AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
             int passwordStrength = CheckPassword(user.Password);
             if (passwordStrength >= 2)
-                return repository.AddUser(user);
+                return await repository.AddUser(user);
             else
                 return null;
         }
-        public User Login(string UserName, string Password)
+        public async Task<User> Login(string UserName, string Password)
         {
-            return repository.Login(UserName, Password);
+            return await repository.Login(UserName, Password);
         }
 
-        public void UpdateUser(int id, User value)
-        {
-            repository.UpdateUser(id, value);
-        }
+        public async Task UpdateUser(int id, User value) => await repository.UpdateUser(id, value);
         public int CheckPassword(string password)
         {
             var result = Zxcvbn.Core.EvaluatePassword(password);
