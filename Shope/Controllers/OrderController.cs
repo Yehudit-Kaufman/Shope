@@ -1,4 +1,6 @@
-﻿using Entite;
+﻿using AutoMapper;
+using DTO;
+using Entite;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
@@ -11,9 +13,12 @@ namespace Shope.Controllers
     public class OrderController : ControllerBase
     {
         IServiceOrder service;
-        public OrderController(IServiceOrder _serviceUser)
+        IMapper _mapper;
+
+        public OrderController(IServiceOrder _serviceUser, IMapper mapper)
         {
             service = _serviceUser;
+            _mapper = mapper;
         }
         // GET: api/<OrderController>
         //[HttpGet]
@@ -26,19 +31,25 @@ namespace Shope.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> Get(int id)
         {
-            return await service.GetOrderById(id);
+
+            Order order= await service.GetOrderById(id);
+            OrderDTO orderDTO= _mapper.Map<Order, OrderDTO>(order);
+            return Ok(orderDTO);
 
         }
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] Order order)
+        public async Task<ActionResult<Order>> Post([FromBody] AddOrderDTO order)
         {
-            Order newOrder = await service.AddOrder(order);
-            if (newOrder != null)
-                return CreatedAtAction(nameof(Get), new { id = order.OrderId }, newOrder);
-            else
-                return BadRequest();
+            Order neworder= _mapper.Map<AddOrderDTO, Order>(order);
+            Order newOrder = await service.AddOrder(neworder);
+
+            //if (newOrder != null)
+            //    return CreatedAtAction(nameof(Get), new { id = order.OrderId }, newOrder);
+            //else
+            //    return BadRequest();
+            return Ok(order);
         }
 
         // PUT api/<OrderController>/5

@@ -22,6 +22,8 @@ builder.Services.AddScoped<IServiceOrder, ServiceOrder>();
 builder.Services.AddDbContext< ShopApiContext>(options
     =>options.UseSqlServer("Server=SRV2\\PUPILS;Database=Shop_Api;Trusted_Connection=True;TrustServerCertificate=True"));
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

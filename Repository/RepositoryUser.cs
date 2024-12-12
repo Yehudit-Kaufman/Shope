@@ -22,9 +22,7 @@ namespace Repository
 
         public async Task<User> GetUserById(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(user => user.UserId == id);
-  
-            
+            return await _context.Users.Include(u => u.Orders).FirstOrDefaultAsync(user => user.UserId == id);
 
         }
 
@@ -40,7 +38,7 @@ namespace Repository
 
         public async Task<User> Login(string UserName, string Password)
         {
-            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == UserName && user.Password ==Password);
+            return await _context.Users.Include(u => u.Orders).FirstOrDefaultAsync(user => user.UserName == UserName && user.Password ==Password);
 
 
         }

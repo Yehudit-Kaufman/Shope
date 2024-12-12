@@ -24,7 +24,7 @@ namespace Repository
         //}
         public async Task<Order> GetOrderById(int id)
         {
-            return await _context.Orders.FirstOrDefaultAsync(order => order.OrderId == id);
+            return await _context.Orders.Include(u => u.User).Include(o => o.OrderItems).FirstOrDefaultAsync(order => order.OrderId == id);
 
 
 
@@ -34,6 +34,7 @@ namespace Repository
         {
             //int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
             //user.UserId = numberOfUsers + 1;
+
             _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             return order;

@@ -1,4 +1,6 @@
-﻿using Entite;
+﻿using AutoMapper;
+using DTO;
+using Entite;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
@@ -11,8 +13,10 @@ namespace Shope.Controllers
     public class ProductController : ControllerBase
     {
         IServiceProduct service;
-        public ProductController(IServiceProduct _serviceUser)
+        IMapper _mapper;
+        public ProductController(IServiceProduct _serviceUser,IMapper mapper)
         {
+            _mapper = mapper; 
             service = _serviceUser;
         }
         
@@ -20,7 +24,10 @@ namespace Shope.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            return await service.GetProducts();
+            List<Product> products = await service.GetProducts();
+            List<ProductDTO> productsDTO = _mapper.Map<List<Product>, List<ProductDTO>>(products);
+            return Ok(productsDTO);
+            //return await service.GetProducts();
         }
 
         //// GET api/<ProductController>/5

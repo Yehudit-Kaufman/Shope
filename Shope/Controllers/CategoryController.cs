@@ -1,4 +1,6 @@
-﻿using Entite;
+﻿using AutoMapper;
+using DTO;
+using Entite;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,9 +12,11 @@ namespace Shope.Controllers
     public class CategoryController : ControllerBase
     {
         IserviceCategory service;
+        IMapper _mapper;
 
-        public CategoryController(IserviceCategory _serviceCategory)
+        public CategoryController(IserviceCategory _serviceCategory, IMapper mapper)
         {
+            _mapper = mapper;
             service = _serviceCategory;
         }
 
@@ -20,7 +24,10 @@ namespace Shope.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Category>>> Get()
         {
-            return await service.GetCategories();
+            List<Category> categories = await service.GetCategories();
+            List<CategoryDTO> categoriesDTO = _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
+            return Ok(categoriesDTO);
+            //return await service.GetCategories();
         }
 
         // GET api/<CategoryController>/5
