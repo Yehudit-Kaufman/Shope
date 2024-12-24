@@ -8,13 +8,16 @@ namespace Shope
         public Mapper()
         {
             CreateMap<User, UserDTO>();
-            //CreateMap<UserDTO,User>();
+
             CreateMap<RegisterUserDTO,User>();
+            CreateMap<User,RegisterUserDTO > ();
             CreateMap<Product, ProductDTO>();
             CreateMap<Category, CategoryDTO>();
             CreateMap<Order, OrderDTO>();
             CreateMap<AddOrderDTO,Order>();
             CreateMap<OrderItemsDTO,OrderItem>();
+            CreateMap<OrderItem,OrderItemsDTO>();
+
 
 
         }

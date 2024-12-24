@@ -7,6 +7,6 @@ using Entite;
 
 namespace DTO
 {
-    public record ProductDTO(string ProductName,double Price,string Description,string CategoryCategoryName);
+    public record ProductDTO(int ProductID,string ProductName,double Price,string Description,string CategoryCategoryName,string? Image);
 
 }

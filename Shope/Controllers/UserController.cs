@@ -32,10 +32,10 @@ namespace Shope.Controllers
 
         //GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> Get(int id)
+        public async Task<ActionResult<RegisterUserDTO>> Get(int id)
         {
             User user=await service.GetUserById(id);
-            UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+            RegisterUserDTO userDTO = _mapper.Map<User, RegisterUserDTO>(user);
             return Ok(userDTO);
         }
 
@@ -76,7 +76,7 @@ namespace Shope.Controllers
 
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
                     if(userDTO != null)
-                        return Ok(userDTO);       
+                        return Ok(user);       
             return NoContent();
 
 

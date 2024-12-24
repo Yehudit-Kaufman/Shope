@@ -14,6 +14,7 @@ public partial class Product
     public int CategoryId { get; set; }
 
     public string Description { get; set; } = null!;
+    public string? Image { get; set; }=null;
 
     public virtual Category Category { get; set; } = null!;
 

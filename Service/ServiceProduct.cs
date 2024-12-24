@@ -16,9 +16,9 @@ namespace Service
             repository = _repositoryProduct;
         }
 
-        public async Task<List<Product>> GetProducts()
+        public async Task<List<Product>> GetProducts(string? desc ,int? minPrice, int? maxPrice, int?[] categoryIds)
         {
-            return await repository.GetProducts();
+            return await repository.GetProducts(desc,minPrice,maxPrice,categoryIds);
 
         }
         //public async Task<Product> GetProductById(int id)

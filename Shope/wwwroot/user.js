@@ -87,9 +87,10 @@ const login = async () => {
             alert("user not found")
         else { 
             const dataPost = await responsePost.json();
+            alert(dataPost.userId)
             sessionStorage.setItem("userId", dataPost.userId)
 
-            window.location.href = "htmlpage.html"
+            window.location.href = "Products.html"
         }
     }
     catch (Error) {
