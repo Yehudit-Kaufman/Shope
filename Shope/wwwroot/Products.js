@@ -2,9 +2,9 @@
     drawProducts()
     showAllCategories();
     let categoryIdArr = [];
-    let basketArr = [];
+    let basketArr = JSON.parse(sessionStorage.getItem("basket"))||[];
     sessionStorage.setItem("categoryIds", JSON.stringify(categoryIdArr))
-    sessionStorage.setItem("basket", JSON.stringify(basketArr))
+        sessionStorage.setItem("basket", JSON.stringify(basketArr))
     document.querySelector("#ItemsCountText").innerHTML = basketArr.length
 
 
@@ -129,7 +129,7 @@ const showOneCategory = async (category) => {
 const filterCategory = (category) => {
     let categories = JSON.parse(sessionStorage.getItem("categoryIds"))
     let a = categories.indexOf(category.categoryID)
-   a == -1 ? categories.push(category.categoryID) : categories.splice(a,1)
+    a == -1 ? categories.push(category.categoryID) : categories.splice(a,1)
     sessionStorage.setItem("categoryIds", JSON.stringify(categories))
     console.log(categories)
     drawProducts()

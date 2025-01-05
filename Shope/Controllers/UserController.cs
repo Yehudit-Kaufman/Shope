@@ -76,7 +76,7 @@ namespace Shope.Controllers
 
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
                     if(userDTO != null)
-                        return Ok(user);       
+                        return Ok(userDTO);       
             return NoContent();
 
 

@@ -31,13 +31,13 @@ namespace Repository
             //return await _context.Products.Include(p=>p.Category).ToListAsync();
 
         }
-        //public async Task<Product> GetProductById(int id)
-        //{
-        //    return await _context.Products.FirstOrDefaultAsync(product => product.ProductId == id);
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(product => product.ProductId == id);
 
 
 
-        //}
+        }
 
         //public async Task<Product> AddProduct(Product product)
         //{

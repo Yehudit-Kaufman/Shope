@@ -30,13 +30,14 @@ namespace Shope.Controllers
             //return await service.GetProducts();
         }
 
-        //// GET api/<ProductController>/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Product>> Get(int id)
-        //{
-        //    return await service.GetProductById(id);
-           
-        //}
+        // GET api/<ProductController>/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDTO>> Get(int id)
+        {
+            Product product =await service.GetProductById(id);
+            return  _mapper.Map<Product, ProductDTO>(product);
+
+        }
 
         //// POST api/<ProductController>
         //[HttpPost]

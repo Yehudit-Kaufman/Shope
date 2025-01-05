@@ -87,7 +87,8 @@ const login = async () => {
             alert("user not found")
         else { 
             const dataPost = await responsePost.json();
-            alert(dataPost.userId)
+            console.log(dataPost)
+            alert(dataPost.firstName)
             sessionStorage.setItem("userId", dataPost.userId)
 
             window.location.href = "Products.html"

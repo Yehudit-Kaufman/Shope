@@ -21,11 +21,11 @@ namespace Service
             return await repository.GetProducts(desc,minPrice,maxPrice,categoryIds);
 
         }
-        //public async Task<Product> GetProductById(int id)
-        //{
-        //    return await repository.GetProductById(id);
+        public async Task<Product> GetProductById(int id)
+        {
+            return await repository.GetProductById(id);
 
-        //}
+        }
         //public async Task<Product> AddProduct(Product product)
         //{
         //    return await repository.AddProduct(product);
