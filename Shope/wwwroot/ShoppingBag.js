@@ -2,9 +2,13 @@
     drawcart()
 
 })
+let price = 0;
 const drawcart = async () => {
+    document.querySelector("tbody").innerHTML = ''
+    price=0
     let productsId = JSON.parse(sessionStorage.getItem("basket"))
-    console.log(productsId)
+    document.getElementById("totalAmount").textContent = price + ' ₪'
+    document.getElementById("itemCount").innerText = productsId.length;
     for (let i = 0; i < productsId.length; i++) {
         await showOneProductInBasket(productsId[i])
     }    
@@ -22,10 +26,12 @@ const showOneProductInBasket = async (product) => {
     });
 
     productInBasket = await productInBasket1.json();
+    
     console.log(productInBasket)
     showOneProduct(productInBasket);
 }
 const showOneProduct = (product) => {
+    price += product.price;
     let url = `./Images/${product.image}`
 
     console.log(url)
@@ -38,6 +44,8 @@ const showOneProduct = (product) => {
     cloneProduct.querySelector(".image").style.backgroundImage = `url(${url})`
     cloneProduct.querySelector(".descriptionColumn").innerText = product.description
     cloneProduct.querySelector(".availabilityColumn").innerText = "true"
+    cloneProduct.querySelector(".expandoHeight").addEventListener('click', () => { deleteproduct(product) })
+    document.getElementById("totalAmount").textContent = price + ' ₪'
 
     document.querySelector("tbody").appendChild(cloneProduct)
 
@@ -59,21 +67,38 @@ const Details = () => {
 }
 
 const placeOrder = async () => {
-    let bodyDetails = Details()
-  
-    const creatOrder = await fetch('api/Order', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bodyDetails)
 
-    });
-    productInBasket = await creatOrder.json();
-    if (creatOrder.ok)
-        alert("ההזמנה נוספה בהצלחה!")
-    else
-        alert("error")
+    if (sessionStorage.getItem("userId")) {
+        let bodyDetails = Details()
 
+        const creatOrder = await fetch('api/Order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bodyDetails)
 
+        });
+        productInBasket = await creatOrder.json();
+        if (creatOrder.ok) {
+            alert("ההזמנה נוספה בהצלחה!")
+            sessionStorage.setItem("basket", JSON.stringify([]))
+            window.location.href = "Products.html"
+        }
+        else
+            alert("error")
+    }
+    else {
+        alert("אנא הרשם")
+        window.location.href = "user.html"
+    }
 }
+const deleteproduct = async (product) => {
+    const cartString = JSON.parse(sessionStorage.getItem("basket")) || [];
+    const current = cartString.indexOf(product.id)
+    cartString.splice(current, 1)
+    sessionStorage.setItem("basket", JSON.stringify(cartString));
+    drawcart()
+}
+
+

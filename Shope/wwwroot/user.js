@@ -91,7 +91,7 @@ const login = async () => {
             alert(dataPost.firstName)
             sessionStorage.setItem("userId", dataPost.userId)
 
-            window.location.href = "Products.html"
+            window.location.href = "ShoppingBag.html"
         }
     }
     catch (Error) {
