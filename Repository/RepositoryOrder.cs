@@ -37,7 +37,8 @@ namespace Repository
 
             _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
-            return order;
+            return order;// you need the order id so var res=_context.Orders.AddAsync(order); order.Id= res.id...
+
 
         }
 
