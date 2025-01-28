@@ -12,10 +12,12 @@ namespace Shope.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private readonly ILogger<ProductController> _logger;
         IServiceProduct service;
         IMapper _mapper;
-        public ProductController(IServiceProduct _serviceUser,IMapper mapper)
+        public ProductController(IServiceProduct _serviceUser,IMapper mapper,ILogger<ProductController>logger)
         {
+            _logger = logger;
             _mapper = mapper; 
             service = _serviceUser;
         }
@@ -24,6 +26,7 @@ namespace Shope.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProductDTO>>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
         {
+
             List<Product> products = await service.GetProducts(desc,minPrice, maxPrice, categoryIds);
             List<ProductDTO> productsDTO = _mapper.Map<List<Product>, List<ProductDTO>>(products);
             return Ok(productsDTO);

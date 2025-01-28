@@ -14,12 +14,15 @@ namespace Shope.Controllers
 
     public class UserController : ControllerBase
     {
+        private readonly ILogger<UserController> _logger;
+
         IServiceUser service ;
         IMapper _mapper;
 
-        public UserController(IServiceUser _serviceUser,IMapper mapper)
+        public UserController(IServiceUser _serviceUser,IMapper mapper,ILogger<UserController>logger)
         {
-            service = _serviceUser;
+            _logger = logger;
+           service = _serviceUser;
             _mapper = mapper;
         }
         
@@ -72,11 +75,16 @@ namespace Shope.Controllers
         [HttpPost("login")]
         public async  Task<ActionResult<UserDTO>>  PostLogin([FromQuery] string UserName,string Password)
         {
+
             User user = await service.Login(UserName, Password);
 
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
                     if(userDTO != null)
-                        return Ok(userDTO);       
+            {
+                _logger.LogInformation($"login attempted with userName,{UserName} and Password {Password}");
+                    return Ok(userDTO);  
+            }
+                             
             return NoContent();
 
 
