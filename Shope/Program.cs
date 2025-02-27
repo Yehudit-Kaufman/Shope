@@ -37,7 +37,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseRatingMiddleware();
 
 // Configure the HTTP request pipeline.

@@ -42,14 +42,20 @@ const showOneProduct = (product) => {
     let cloneProduct = tmp.content.cloneNode(true)
 
     cloneProduct.querySelector(".image").style.backgroundImage = `url(${url})`
-    cloneProduct.querySelector(".descriptionColumn").innerText = product.description
+    //cloneProduct.querySelector(".descriptionColumn").innerText = product.description
+    cloneProduct.querySelector(".itemName").innerText = product.productName
+
+    //cloneProduct.querySelector(".availabilityColumn").innerText = "true"
     cloneProduct.querySelector(".availabilityColumn").innerText = "true"
+
+    cloneProduct.querySelector(".price").innerText = product.price + '₪'
     cloneProduct.querySelector(".expandoHeight").addEventListener('click', () => { deleteproduct(product) })
     document.getElementById("totalAmount").textContent = price + ' ₪'
 
     document.querySelector("tbody").appendChild(cloneProduct)
 
 }
+
 const Details = () => {
     let UserId = JSON.parse(sessionStorage.getItem("userId"))
     let orderItems1 = JSON.parse(sessionStorage.getItem("basket"))
@@ -58,7 +64,7 @@ const Details = () => {
         let obj = { productId: t, quantity:1}
         orderItems.push(obj)
     })
-    let OrderSum = 100
+    let OrderSum = price
     var OrderDate = new Date()
 
     return ({
@@ -67,30 +73,36 @@ const Details = () => {
 }
 
 const placeOrder = async () => {
+    if (price != 0) {
+        if (sessionStorage.getItem("userId")) {
+            let bodyDetails = Details()
 
-    if (sessionStorage.getItem("userId")) {
-        let bodyDetails = Details()
+            const creatOrder = await fetch('api/Order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bodyDetails)
 
-        const creatOrder = await fetch('api/Order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bodyDetails)
-
-        });
-        productInBasket = await creatOrder.json();
-        if (creatOrder.ok) {
-            alert("ההזמנה נוספה בהצלחה!")
-            sessionStorage.setItem("basket", JSON.stringify([]))
-            window.location.href = "Products.html"
+            });
+            productInBasket = await creatOrder.json();
+            console.log(productInBasket)
+            if (creatOrder.ok) {
+                alert(`ההזמנה מס ${productInBasket.orderId} נוספה בהצלחה!`)
+                sessionStorage.setItem("basket", JSON.stringify([]))
+                window.location.href = "Products.html"
+            }
+            else
+                alert("error")
         }
-        else
-            alert("error")
+        else {
+            alert("אנא הרשם")
+            window.location.href = "user.html"
+        }
     }
-    else {
-        alert("אנא הרשם")
-        window.location.href = "user.html"
+    else { 
+        alert("הסל שלך ריק. אנא הוסף מוצרים")
+        window.location.href = "Products.html"
     }
 }
 const deleteproduct = async (product) => {

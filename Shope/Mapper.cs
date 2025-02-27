@@ -14,7 +14,7 @@ namespace Shope
             CreateMap<Product, ProductDTO>();
             CreateMap<Category, CategoryDTO>();
             CreateMap<Order, OrderDTO>();
-            CreateMap<AddOrderDTO,Order>();
+            CreateMap<PostOrderDTO,Order>();
             CreateMap<OrderItemsDTO,OrderItem>();
             CreateMap<OrderItem,OrderItemsDTO>();
 

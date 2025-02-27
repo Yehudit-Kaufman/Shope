@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{6778E9A0-FA11-401B-BEB2-57E7AFC5BBBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{4A279C53-770A-49D2-960A-FF956F38516E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{4A279C53-770A-49D2-960A-FF956F38516E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{CE6332F0-8177-4E2D-BF44-14D7E907B097}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4A279C53-770A-49D2-960A-FF956F38516E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A279C53-770A-49D2-960A-FF956F38516E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A279C53-770A-49D2-960A-FF956F38516E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE6332F0-8177-4E2D-BF44-14D7E907B097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6332F0-8177-4E2D-BF44-14D7E907B097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6332F0-8177-4E2D-BF44-14D7E907B097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6332F0-8177-4E2D-BF44-14D7E907B097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
