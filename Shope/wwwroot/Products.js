@@ -1,4 +1,5 @@
-﻿const productList = addEventListener("load", async () => {
+﻿
+const productList = addEventListener("load", async () => {
     drawProducts()
     showAllCategories();
     let categoryIdArr = [];

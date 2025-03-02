@@ -40,7 +40,13 @@ namespace Service
             return await repository.Login(UserName, Password);
         }
 
-        public async Task UpdateUser(int id, User value) => await repository.UpdateUser(id, value);
+        public async Task<User> UpdateUser(int id, User user)
+        {
+            if (CheckPassword(user.Password) < 3)
+                throw new Exception("Password is not strong enough");
+ ;
+            return await repository.UpdateUser(id, user);
+        }
         public int CheckPassword(string password)
         {
             var result = Zxcvbn.Core.EvaluatePassword(password);

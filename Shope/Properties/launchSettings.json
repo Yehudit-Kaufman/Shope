@@ -16,7 +16,7 @@
       "launchUrl": "Products.html",
       "applicationUrl": "http://localhost:5071",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "School"
       }
     },
     "https": {
@@ -26,7 +26,7 @@
       "launchUrl": "user.html",
       "applicationUrl": "https://localhost:7161;http://localhost:5071",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "School"
       }
     },
     "IIS Express": {
@@ -34,7 +34,7 @@
       "launchBrowser": true,
       "launchUrl": "user.html",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "School"
       }
     }
   }

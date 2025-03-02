@@ -65,6 +65,7 @@ const Details = () => {
         orderItems.push(obj)
     })
     let OrderSum = price
+   
     var OrderDate = new Date()
 
     return ({

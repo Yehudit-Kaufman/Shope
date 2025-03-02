@@ -43,10 +43,12 @@ namespace Repository
 
         }
 
-        public async Task UpdateUser(int id, User value)
+        public async Task<User> UpdateUser(int id, User value)
         {
+            value.UserId = id;
             _context.Users.Update(value);
             await _context.SaveChangesAsync();
+            return value;
         }
 
 

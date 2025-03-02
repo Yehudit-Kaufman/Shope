@@ -59,24 +59,40 @@ namespace Shope.Controllers
             if (newUserDTO != null)
                 return CreatedAtAction(nameof(Get), new { id = user.UserName }, newUserDTO);
             else
-                return BadRequest(newUserDTO);
+                if (!ModelState.IsValid)
+
+            {
+
+                var errors = ModelState.SelectMany(ms => ms.Value.Errors)
+
+                .Select(error => error.ErrorMessage)
+
+                .ToList();
+
+                return BadRequest(errors); // מחזיר את השגיאות
+
+            }
 
 
+            return BadRequest(newUserDTO);
         }
         [HttpPost]
         [Route("password")]
-        public int PostPassword([FromQuery] string password)
+        public IActionResult PostPassword([FromQuery] string password)
         {
 
-            return service.CheckPassword(password);
-
+            int score = service.CheckPassword(password);
+            return score < 3 ? BadRequest(score) : Ok(score);
         }
+
+       
 
         [HttpPost("login")]
         public async  Task<ActionResult<UserDTO>>  PostLogin([FromQuery] string UserName,string Password)
         {
 
             User user = await service.Login(UserName, Password);
+            Console.WriteLine(user);
 
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
                     if(userDTO != null)
@@ -84,17 +100,17 @@ namespace Shope.Controllers
                 _logger.LogInformation($"login attempted with userName,{UserName} and Password {Password}");
                     return Ok(userDTO);  
             }
-                             
+
             return NoContent();
 
 
         }
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] UserDTO value)
+        public async Task<ActionResult<User>> Put(int id, [FromBody] RegisterUserDTO value)
         {
-            User user= _mapper.Map<UserDTO,User>(value);
-            await service.UpdateUser(id, user);
+            User user= _mapper.Map<RegisterUserDTO, User>(value);
+            return Ok(await service.UpdateUser(id, user));
 
         }
 

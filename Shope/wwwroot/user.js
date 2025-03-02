@@ -1,34 +1,96 @@
-﻿const getAllDetailsFromFormForRegister = () => {
-    const UserName = document.getElementById("username").value
-    const Password = document.querySelector("#password").value
-    const FirstName = document.querySelector("#firstname").value
-    const LastName = document.querySelector("#lastname").value
-    if (!UserName || !Password || !FirstName || !LastName) {
-
-        alert("all filed is requred")
-    }
-    else {
-        return ({
-            UserName, Password, FirstName, LastName
-        })
-    }
-}
-const register = async() => {
-    newUser = getAllDetailsFromFormForRegister()
-        const responsePost = await fetch('api/user', {
-            method: 'POST',
+﻿const cartLIst = addEventListener("load", async () => {
+    if (sessionStorage.getItem("userId")) {
+        const responsePut = await fetch(`api/user/${sessionStorage.getItem('userId')}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newUser)
+            }
+          
         });
-    if (responsePost.ok) { 
-        const dataPost = await responsePost.json();
-        console.log('POST Data:', dataPost)
-        alert(`hello ${dataPost.firstName}`)
+
+        const dataPost = await responsePut.json();
+        document.getElementById("username").value = dataPost.userName
+        document.getElementById("firstname").value = dataPost.firstName
+        document.getElementById("lastname").value = dataPost.lastName
+}
+
+})
+
+
+const getAllDetailsFromFormForRegister = () => {
+    const UserName = document.getElementById("username").value;
+    const Password = document.querySelector("#password").value;
+    const FirstName = document.querySelector("#firstname").value;
+    const LastName = document.querySelector("#lastname").value;
+
+    // Check if all fields are filled
+    if (!UserName || !Password || !FirstName || !LastName) {
+        alert("All fields are required");
+        return;
     }
-    else
-    alert("bed req")
+
+    // Validate UserName (Email Address)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(UserName)) {
+        alert("Invalid email address");
+        return;
+    }
+
+    // Validate FirstName
+    if (FirstName.length < 2 || FirstName.length > 20) {
+        alert("FirstName can be between 2 to 20 letters");
+        return;
+    }
+
+    // Validate LastName
+    if (LastName.length < 2 || LastName.length > 20) {
+        alert("LastName can be between 2 to 20 letters");
+        return;
+    }
+
+    // No specific validation for Password in the DTO, but you can add your own if needed
+    if (Password.length < 6) {
+        alert("Password must be at least 6 characters long");
+        return;
+    }
+
+    return {
+        UserName,
+        Password,
+        FirstName,
+        LastName
+    };
+}
+const register = async () => {
+    const newUser = getAllDetailsFromFormForRegister();
+    const responsePost = await fetch('api/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser)
+    });
+
+    if (responsePost.ok) {
+        const dataPost = await responsePost.json();
+        console.log('POST Data:', dataPost);
+        alert(`hello ${dataPost.firstName}`);
+    }
+
+    //else {
+        
+
+            //const errorResponse = await responsePost.json();
+            //for (const key in errorResponse.errors) {
+            //    if (errorResponse.errors.hasOwnProperty(key)) {
+            //        const errors = errorResponse.errors[key];
+            //        errors.forEach(error => {
+            //            alert(error); // הצג כל שגיאה
+            //        });
+            //    }
+            //}
+        
+    //}
 }
 const checkPassword = async () => {
     const password = document.querySelector("#password")
@@ -99,7 +161,7 @@ const login = async () => {
         
     }
 }
-const update = async () => {
+const updateUser = async () => {
     newUser = getAllDetailsFromFormForRegister()
 
     const responsePut = await fetch(`api/user/${sessionStorage.getItem('userId')}`, {

@@ -1,4 +1,5 @@
 ﻿using Entite;
+using Microsoft.Extensions.Logging;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,23 @@ namespace Service
 {
     public class ServiceOrder : IServiceOrder
     {
+        private readonly ILogger<ServiceOrder> _logger;
         IRepositoryOrder repository;
         IRepositoryProduct repository2;
-        public ServiceOrder(IRepositoryOrder _repository, IRepositoryProduct repository22)
+        public ServiceOrder(IRepositoryOrder _repository, IRepositoryProduct repository22, ILogger<ServiceOrder> logger)
         {
             repository = _repository;
             repository2 = repository22;
+           _logger = logger;
         
         }
         public async Task<Order> AddOrder(Order order)
         {
-
-            if (await getCurrentSumProducts(order) != order.OrderSum)
+            double orderSum = await getCurrentSumProducts(order);
+            if (orderSum != order.OrderSum)
             {
-                order.OrderSum = await getCurrentSumProducts(order);
+                order.OrderSum = orderSum;
+                _logger.LogCritical($"the order sum is not equals!!");
             }
                 return await repository.AddOrder(order);
            
