@@ -43,7 +43,8 @@ namespace Service
         public async Task<User> UpdateUser(int id, User user)
         {
             if (CheckPassword(user.Password) < 3)
-                throw new Exception("Password is not strong enough");
+                return null;
+                //throw new Exception("Password is not strong enough");
  ;
             return await repository.UpdateUser(id, user);
         }

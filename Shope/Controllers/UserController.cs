@@ -58,23 +58,26 @@ namespace Shope.Controllers
             UserDTO newUserDTO = _mapper.Map<User, UserDTO>(userDTO);//////////////////////////////////////////////////////////
             if (newUserDTO != null)
                 return CreatedAtAction(nameof(Get), new { id = user.UserName }, newUserDTO);
-            else
-                if (!ModelState.IsValid)
+            //else
+            //    if (!ModelState.IsValid)
 
-            {
+            //{
 
-                var errors = ModelState.SelectMany(ms => ms.Value.Errors)
+            //    var errors = ModelState.SelectMany(ms => ms.Value.Errors)
 
-                .Select(error => error.ErrorMessage)
+            //    .Select(error => error.ErrorMessage)
 
-                .ToList();
+            //    .ToList();
 
-                return BadRequest(errors); // מחזיר את השגיאות
+            //    return BadRequest(errors); // מחזיר את השגיאות
 
-            }
+            //}
+            //else
+            //    throw new Exception("password week");
+
+            return BadRequest("Password week");
 
 
-            return BadRequest(newUserDTO);
         }
         [HttpPost]
         [Route("password")]
@@ -108,9 +111,15 @@ namespace Shope.Controllers
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Put(int id, [FromBody] RegisterUserDTO value)
-        {
+        {  
             User user= _mapper.Map<RegisterUserDTO, User>(value);
-            return Ok(await service.UpdateUser(id, user));
+            User userUpdate = await service.UpdateUser(id, user);
+            if (userUpdate != null)   
+            return Ok();
+            else
+                return BadRequest("Password week");
+
+
 
         }
 

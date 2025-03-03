@@ -3,6 +3,7 @@ const productList = addEventListener("load", async () => {
     drawProducts()
     showAllCategories();
     let categoryIdArr = [];
+    
     let basketArr = JSON.parse(sessionStorage.getItem("basket"))||[];
     sessionStorage.setItem("categoryIds", JSON.stringify(categoryIdArr))
         sessionStorage.setItem("basket", JSON.stringify(basketArr))

@@ -3,6 +3,8 @@ using DTO;
 using Entite;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Shope.Controllers
@@ -13,17 +15,38 @@ namespace Shope.Controllers
     {
         IserviceCategory service;
         IMapper _mapper;
+        IMemoryCache cach;
 
-        public CategoryController(IserviceCategory _serviceCategory, IMapper mapper)
+        public CategoryController(IserviceCategory _serviceCategory, IMapper mapper, IMemoryCache _cach)
         {
             _mapper = mapper;
             service = _serviceCategory;
+            cach = _cach;
         }
 
-        // GET: api/<CategoryController>
-        [HttpGet]
+
+
+
+//        [HttpGet]
+//        public async Task<ActionResult<List<Category>>> Get()
+//        {
+//            if (!cache.TryGetValue("categories", out List<Category> categories))
+//            {
+//                categories = await categoryService.getAll();
+//                cache.Set("categories", categories, TimeSpan.FromMinutes(30));
+//            }
+//            List<CategoryDTO> categoryDTOList = mapper.Map<List<Category>, List<CategoryDTO>>(categories);
+//            return categoryDTOList != null ? Ok(categoryDTOList) : BadRequest();
+//        }
+//    }
+//}
+
+// GET: api/<CategoryController>
+[HttpGet]
         public async Task<ActionResult<List<Category>>> Get()
         {
+
+
             List<Category> categories = await service.GetCategories();
             List<CategoryDTO> categoriesDTO = _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
             return Ok(categoriesDTO);

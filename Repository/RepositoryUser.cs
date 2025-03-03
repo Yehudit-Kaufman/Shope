@@ -30,13 +30,24 @@ namespace Repository
         {
             //int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
             //user.UserId = numberOfUsers + 1;
-            _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-            return user;
+
+
+            User checkEmailuser = await _context.Users.FirstOrDefaultAsync(user1 => user1.UserName == user.UserName);
+            if (checkEmailuser == default)
+            {
+                _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                return user;
+        }
+                else
+                    return null;
+                //throw new NotImplementedException();
+
+              
 
         }
 
-        public async Task<User> Login(string UserName, string Password)
+    public async Task<User> Login(string UserName, string Password)
         {
             return await _context.Users.Include(u => u.Orders).FirstOrDefaultAsync(user => user.UserName == UserName && user.Password ==Password);
 
@@ -52,7 +63,7 @@ namespace Repository
         }
 
 
-
+ 
 
 
 

@@ -62,7 +62,9 @@ const getAllDetailsFromFormForRegister = () => {
     };
 }
 const register = async () => {
+
     const newUser = getAllDetailsFromFormForRegister();
+    if (newUser != undefined) { 
     const responsePost = await fetch('api/user', {
         method: 'POST',
         headers: {
@@ -76,10 +78,12 @@ const register = async () => {
         console.log('POST Data:', dataPost);
         alert(`hello ${dataPost.firstName}`);
     }
+   
 
-    //else {
+    else {
         
-
+    const errorText = await responsePost.text(); // קבלת טקסט השגיאה מהתגובה
+    alert(errorText); // הצגת השגיאה באלרט
             //const errorResponse = await responsePost.json();
             //for (const key in errorResponse.errors) {
             //    if (errorResponse.errors.hasOwnProperty(key)) {
@@ -89,8 +93,8 @@ const register = async () => {
             //        });
             //    }
             //}
-        
-    //}
+        }
+    }
 }
 const checkPassword = async () => {
     const password = document.querySelector("#password")
@@ -171,12 +175,15 @@ const updateUser = async () => {
         },
         body: JSON.stringify(newUser)
     });
-    if (responsePut.ok) { 
+    if (responsePut.ok) {
 
-    alert("update sucsses")
+        alert("update sucsses")
     }
-    else
-        alert("update not sucsses")
+    else {
+
+        const errorText = await responsePut.text(); // קבלת טקסט השגיאה מהתגובה
+        alert(errorText); // הצגת השגיאה באלרט
+    }
 }
 
 
