@@ -20,12 +20,12 @@ const getDetailsFromForm = async () => {
     }
     return search
 }
-const filterProducts = async () => {
+const filterProducts = async () => {//? why do you need this function?
 
     drawProducts()
     
 }
-const drawProducts = async () => {
+const drawProducts = async () => {//divide it to 2 funcs- build url, getProducts 
     const categoryIds1 = JSON.parse(sessionStorage.getItem("categoryIds"))
     console.log(categoryIds1)
     let { nameSearch, minPrice, maxPrice }= await getDetailsFromForm()
@@ -39,7 +39,7 @@ const drawProducts = async () => {
     if (maxPrice)
         url += `&maxPrice=${maxPrice}`
         if (categoryIds1 != []) {
-            for (let i = 0; i < categoryIds1.length; i++) {
+            for (let i = 0; i < categoryIds1.length; i++) {//map is nicer
                 url += `&categoryIds=${categoryIds1[i]}`
             }
         }
@@ -112,7 +112,7 @@ const showAllCategories = async () => {
         
     });
     allCategories = await allCategories1.json();
-    for (let i = 0; i < allCategories.length; i++) {
+    for (let i = 0; i < allCategories.length; i++) {//map is nicer
         showOneCategory(allCategories[i]);
 
     }
