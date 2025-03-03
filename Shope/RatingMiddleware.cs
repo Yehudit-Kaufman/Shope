@@ -8,6 +8,7 @@ using Entite;
 namespace Shope
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
+    //kt hpv
     public class RatingMiddleware
     {
         private readonly RequestDelegate _next;
