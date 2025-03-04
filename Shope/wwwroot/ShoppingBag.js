@@ -42,10 +42,8 @@ const showOneProduct = (product) => {
     let cloneProduct = tmp.content.cloneNode(true)
 
     cloneProduct.querySelector(".image").style.backgroundImage = `url(${url})`
-    //cloneProduct.querySelector(".descriptionColumn").innerText = product.description
     cloneProduct.querySelector(".itemName").innerText = product.productName
 
-    //cloneProduct.querySelector(".availabilityColumn").innerText = "true"
     cloneProduct.querySelector(".availabilityColumn").innerText = "true"
 
     cloneProduct.querySelector(".price").innerText = product.price + '₪'

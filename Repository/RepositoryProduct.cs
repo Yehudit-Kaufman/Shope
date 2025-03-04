@@ -28,7 +28,6 @@ namespace Repository
             Console.WriteLine(query.ToQueryString());
             List<Product> products = await query.ToListAsync();
             return products;
-            //return await _context.Products.Include(p=>p.Category).ToListAsync();
 
         }
         public async Task<Product> GetProductById(int id)
@@ -39,21 +38,6 @@ namespace Repository
 
         }
 
-        //public async Task<Product> AddProduct(Product product)
-        //{
-        //    //int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
-        //    //user.UserId = numberOfUsers + 1;
-        //    _context.Products.AddAsync(product);
-        //    await _context.SaveChangesAsync();
-        //    return product;
-
-        //}
-
-        //public async Task UpdateProduct(int id, Product value)
-        //{
-        //    _context.Products.Update(value);
-        //    await _context.SaveChangesAsync();
-        //}
 
 
 

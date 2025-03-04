@@ -23,32 +23,27 @@ const getAllDetailsFromFormForRegister = () => {
     const FirstName = document.querySelector("#firstname").value;
     const LastName = document.querySelector("#lastname").value;
 
-    // Check if all fields are filled
     if (!UserName || !Password || !FirstName || !LastName) {
         alert("All fields are required");
         return;
     }
 
-    // Validate UserName (Email Address)
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(UserName)) {
         alert("Invalid email address");
         return;
     }
 
-    // Validate FirstName
     if (FirstName.length < 2 || FirstName.length > 20) {
         alert("FirstName can be between 2 to 20 letters");
         return;
     }
 
-    // Validate LastName
     if (LastName.length < 2 || LastName.length > 20) {
         alert("LastName can be between 2 to 20 letters");
         return;
     }
 
-    // No specific validation for Password in the DTO, but you can add your own if needed
     if (Password.length < 6) {
         alert("Password must be at least 6 characters long");
         return;
@@ -62,40 +57,36 @@ const getAllDetailsFromFormForRegister = () => {
     };
 }
 const register = async () => {
-
     const newUser = getAllDetailsFromFormForRegister();
-    if (newUser != undefined) { 
-    const responsePost = await fetch('api/user', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newUser)
-    });
+    if (newUser != undefined) {
+        try {
+            const responsePost = await fetch('api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
+            });
 
-    if (responsePost.ok) {
-        const dataPost = await responsePost.json();
-        console.log('POST Data:', dataPost);
-        alert(`hello ${dataPost.firstName}`);
-    }
-   
-
-    else {
-        
-    const errorText = await responsePost.text(); // קבלת טקסט השגיאה מהתגובה
-    alert(errorText); // הצגת השגיאה באלרט
-            //const errorResponse = await responsePost.json();
-            //for (const key in errorResponse.errors) {
-            //    if (errorResponse.errors.hasOwnProperty(key)) {
-            //        const errors = errorResponse.errors[key];
-            //        errors.forEach(error => {
-            //            alert(error); // הצג כל שגיאה
-            //        });
-            //    }
-            //}
+            if (responsePost.ok) {
+                const dataPost = await responsePost.json();
+                console.log('POST Data:', dataPost);
+                alert(`hello ${dataPost.firstName}`);
+                toggleRegister(); 
+            }
+            else {
+                const errorText = await responsePost.text();
+                alert(errorText)
+            }
+        }
+        catch (error) {
+            console.log(error)
+            alert(error);
         }
     }
 }
+
+
 const checkPassword = async () => {
     const password = document.querySelector("#password")
     const progress = document.querySelector("#progress")
@@ -154,7 +145,8 @@ const login = async () => {
         else { 
             const dataPost = await responsePost.json();
             console.log(dataPost)
-            alert(dataPost.firstName)
+            alert(`hello ${dataPost.firstName}`);
+
             sessionStorage.setItem("userId", dataPost.userId)
 
             window.location.href = "ShoppingBag.html"
@@ -167,7 +159,7 @@ const login = async () => {
 }
 const updateUser = async () => {
     newUser = getAllDetailsFromFormForRegister()
-
+    try { 
     const responsePut = await fetch(`api/user/${sessionStorage.getItem('userId')}`, {
         method: 'PUT',
         headers: {
@@ -175,14 +167,18 @@ const updateUser = async () => {
         },
         body: JSON.stringify(newUser)
     });
-    if (responsePut.ok) {
-
-        alert("update sucsses")
+        if (responsePut.ok) {
+            const dataPost = await responsePut.json();
+            console.log('POST Data:', dataPost);
+            alert(`Update Success`);
+        }
+        else {
+            const errorText = await responsePut.text();
+            alert(errorText)
+        }
     }
-    else {
-
-        const errorText = await responsePut.text(); // קבלת טקסט השגיאה מהתגובה
-        alert(errorText); // הצגת השגיאה באלרט
+    catch(Error) {
+        console.log(Error)
     }
 }
 

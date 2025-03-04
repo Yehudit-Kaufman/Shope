@@ -21,21 +21,6 @@ namespace Service
             return await repository.GetCategories();
 
         }
-        //public async Task<Category> GetCategoryById(int id)
-        //{
-        //    return await repository.GetCategoryById(id);
-
-        //}
-        //public async Task<Category> AddCategory(Category category)
-        //{
-        //    return await repository.AddCategory(category);
-
-        //}
-        //public async Task UpdateCategory(int id, Category category)
-        //{
-        //    await repository.UpdateCategory(id, category);
-
-        //}
 
     }
 

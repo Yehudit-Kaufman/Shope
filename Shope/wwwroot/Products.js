@@ -87,18 +87,13 @@ const showOneProduct = async (product) => {
 }
 const addToCart = (product) => {
  
-    //if (sessionStorage.getItem("userId")) {
 
         let productsInbasket = JSON.parse(sessionStorage.getItem("basket"))
         productsInbasket.push(product.productID)
         sessionStorage.setItem("basket", JSON.stringify(productsInbasket))
         document.querySelector("#ItemsCountText").innerHTML = productsInbasket.length
         alert("נוסף בהצלחה")
-    //}
-    //else {
-    //    alert("אנא הרשם")
-    //    window.location.href = "user.html"
-    //}
+
 
 }
 

@@ -39,7 +39,7 @@ namespace Service
             foreach (var item in order.OrderItems)
             {
              Product u=await repository2.GetProductById(item.ProductId);
-                sum += u.Price;
+                sum += u.Price*item.Quantity;
             }
             return sum;
         }

@@ -4,6 +4,7 @@ using Moq;
 using Moq.EntityFrameworkCore;
 using DTO;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 namespace TestProject1
 {
     public class UnitTest1
@@ -20,8 +21,7 @@ namespace TestProject1
             Assert.Equal(user, result);
             
         }
-
-
+       
         [Fact]
         public async void Login_InvalidEmailReturnsNull()
         {
@@ -35,20 +35,43 @@ namespace TestProject1
 
             Assert.Null(result);
         }
-
         [Fact]
-        public async void Login_InvalidPasswordReturnsNull()
+        public async Task Get_UserDoesNotExist_ReturnsNull()
         {
-            var user = new User { FirstName = "aa", LastName = "bb", UserName = "Tz@123cvv", Password = "secure123" };
-            var users = new List<User>() { user };
+          
+            var mockContext = new Mock<ShopApiContext>();
+            var users = new List<User>();
+            mockContext.Setup(x => x.Users).ReturnsDbSet(users);
+          
+            mockContext.Setup(m => m.Users.FindAsync(It.IsAny<int>())).ReturnsAsync((User)null);
+
+            var Reposetory = new RepositoryUser(mockContext.Object);
+
+            var result = await Reposetory.GetUserById(999); 
+
+         
+            Assert.Null(result); 
+        }
+         [Fact]
+
+        public async Task Login_InvalidPasswordReturnsNull()
+        {
+            // Arrange
+            var user = new User { UserName = "test@example.com", Password = "password123", FirstName = "John", LastName = "Doe" };
+            var users = new List<User> { user };
             var mockContext = new Mock<ShopApiContext>();
             mockContext.Setup(x => x.Users).ReturnsDbSet(users);
-            var userRepository = new RepositoryUser(mockContext.Object);
 
-            var result = await userRepository.Login(user.UserName, "wrongpassword");
+            var repository = new RepositoryUser(mockContext.Object);
 
+            // Act
+            var result = await repository.Login(user.UserName, "wrongpassword");
+
+            // Assert
             Assert.Null(result);
         }
+
+
         [Fact]
         public async Task UpdateUser_ExistingUser_UpdatesUser()
         {

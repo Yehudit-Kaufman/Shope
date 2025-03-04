@@ -25,27 +25,25 @@ namespace Repository
             return await _context.Users.Include(u => u.Orders).FirstOrDefaultAsync(user => user.UserId == id);
 
         }
+        public async Task<User> ValidateDuplicateUser(string UserName,string Password)
+        {
+            User checkUser = await _context.Users.FirstOrDefaultAsync(user1 => user1.UserName == UserName && user1.Password == Password);
+            return checkUser;
+        }
+      
 
         public async Task<User> AddUser(User user)
         {
-            //int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
-            //user.UserId = numberOfUsers + 1;
 
-
-            User checkEmailuser = await _context.Users.FirstOrDefaultAsync(user1 => user1.UserName == user.UserName);
-            if (checkEmailuser == default)
-            {
                 _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
                 return user;
-        }
-                else
-                    return null;
-                //throw new NotImplementedException();
+   
 
-              
+        }  
 
-        }
+
+
 
     public async Task<User> Login(string UserName, string Password)
         {
@@ -56,10 +54,14 @@ namespace Repository
 
         public async Task<User> UpdateUser(int id, User value)
         {
-            value.UserId = id;
-            _context.Users.Update(value);
-            await _context.SaveChangesAsync();
-            return value;
+
+            
+                value.UserId = id;
+                _context.Users.Update(value);
+                await _context.SaveChangesAsync();
+                return value;
+            
+
         }
 
 

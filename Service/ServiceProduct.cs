@@ -26,16 +26,7 @@ namespace Service
             return await repository.GetProductById(id);
 
         }
-        //public async Task<Product> AddProduct(Product product)
-        //{
-        //    return await repository.AddProduct(product);
 
-        //}
-        //public async Task UpdateProduct(int id, Product product)
-        //{
-        //    await repository.UpdateProduct(id, product);
-
-        //}
 
     }
 }

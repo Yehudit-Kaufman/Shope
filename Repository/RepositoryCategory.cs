@@ -22,29 +22,6 @@ namespace Repository
 
 
         }
-        //public async Task<Category> GetCategoryById(int id)
-        //{
-        //    return await _context.Categories.FirstOrDefaultAsync(category => category.CategoryId == id);
-
-
-
-        //}
-
-        //public async Task<Category> AddCategory(Category category)
-        //{
-        //    //int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
-        //    //user.UserId = numberOfUsers + 1;
-        //    _context.Categories.AddAsync(category);
-        //    await _context.SaveChangesAsync();
-        //    return category;
-
-        //}
-
-        //public async Task UpdateCategory(int id, Category value)
-        //{
-        //    _context.Categories.Update(value);
-        //    await _context.SaveChangesAsync();
-        //}
 
 
 

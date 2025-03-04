@@ -42,28 +42,6 @@ namespace Shope.Controllers
 
         }
 
-        //// POST api/<ProductController>
-        //[HttpPost]
-        //public async Task<ActionResult<Product>> Post([FromBody] Product product)
-        //{
-        //    Product newProduct = await service.AddProduct(product);
-        //    if (newProduct != null)
-        //        return CreatedAtAction(nameof(Get), new { id = product.ProductId }, newProduct);
-        //    else
-        //        return BadRequest();
-        //}
-
-        //// PUT api/<ProductController>/5
-        //[HttpPut("{id}")]
-        //public async Task Put(int id, [FromBody] Product value)
-        //{
-        //    await service.UpdateProduct(id, value);
-        //}
-
-        //// DELETE api/<ProductController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+   
     }
 }
